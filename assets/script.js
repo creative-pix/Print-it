@@ -23,31 +23,46 @@ const arrow_right = document.querySelector('.arrow_right')
 const img = document.querySelector('.banner-img')
 let index = 0
 
-/* Ecoute de la fleche gauche */
+/* Execution des fonctions */
 
-function clickLeft() {
-arrow_left.addEventListener('click', () => {
-	console.log("J'ai cliqué sur la flèche gauche")
-
-	index++
-	if (index > slides.length - 1) {
-		index= 0
-	}
-/* 	mise a jour de l'image et du texte */
-
-	img.src = `assets/images/slideshow/${slides[index].image}`
-	document.querySelector('p').innerHTML = slides[index].tagLine
-})
-}
-
+function main() {
+clickRight()
 clickLeft()
+}
+main()
 
 /* Ecoute de la fleche droite */
 
 function clickRight() {
-arrow_right.addEventListener('click', () => {
-	console.log("J'ai cliqué sur la flèche droite")	
-})
+	arrow_right.addEventListener('click', () => {
+		console.log("J'ai cliqué sur la flèche droite")	
+
+		index++
+		if (index > slides.length - 1) {
+			index= 0
+		}
+		/* 	mise a jour de l'image et du texte */
+		img.src = `assets/images/slideshow/${slides[index].image}`
+		document.querySelector('p').innerHTML = slides[index].tagLine
+	})
 }
 
-clickRight()
+/* Ecoute de la fleche gauche */
+
+function clickLeft() {
+	arrow_left.addEventListener('click', () => {
+		console.log("J'ai cliqué sur la flèche gauche")
+
+		index--
+		if (index < 0 ) {
+			index = slides.length - 1
+		}
+		console.log(index)
+	/* 	mise a jour de l'image et du texte */
+	img.src = `assets/images/slideshow/${slides[index].image}`
+	document.querySelector('p').innerHTML = slides[index].tagLine
+	})
+}
+
+/* Affichage des points  */
+

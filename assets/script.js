@@ -16,14 +16,14 @@ const slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
-/* Déclaration des constantes & variables */
 
 const arrow_left = document.querySelector('.arrow_left')
 const arrow_right = document.querySelector('.arrow_right')
 const img = document.querySelector('.banner-img')
+const dots = document.querySelectorAll('.dots .dot')
 let index = 0
 
-/* Execution des fonctions */
+//  Execution des fonctions  //
 
 function main() {
 clickRight()
@@ -31,38 +31,46 @@ clickLeft()
 }
 main()
 
-/* Ecoute de la fleche droite */
+// Ecoute de la flèche droite //
 
 function clickRight() {
 	arrow_right.addEventListener('click', () => {
-		console.log("J'ai cliqué sur la flèche droite")	
+		console.log("J'ai cliqué sur la flèche droite")
+		console.log(dots)
+
+		//  On retire le premier point selected  //
+
+		dots[index].classList.remove('dot_selected')	
 
 		index++
 		if (index > slides.length - 1) {
 			index= 0
 		}
-		/* 	mise a jour de l'image et du texte */
+		// 	mise a jour de l'image, du texte, et du point (index+1) //
+
 		img.src = `assets/images/slideshow/${slides[index].image}`
 		document.querySelector('p').innerHTML = slides[index].tagLine
+		dots[index].classList.add('dot_selected')
 	})
 }
 
-/* Ecoute de la fleche gauche */
+// Ecoute de la flèche gauche //
 
 function clickLeft() {
 	arrow_left.addEventListener('click', () => {
 		console.log("J'ai cliqué sur la flèche gauche")
+
+		dots[index].classList.remove('dot_selected')	
 
 		index--
 		if (index < 0 ) {
 			index = slides.length - 1
 		}
 		console.log(index)
-	/* 	mise a jour de l'image et du texte */
+		// 	mise a jour de l'image et du texte, et du point (index-1) //
+		
 	img.src = `assets/images/slideshow/${slides[index].image}`
 	document.querySelector('p').innerHTML = slides[index].tagLine
+	dots[index].classList.add('dot_selected')
 	})
 }
-
-/* Affichage des points  */
-

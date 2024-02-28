@@ -20,57 +20,70 @@ const slides = [
 const arrow_left = document.querySelector('.arrow_left')
 const arrow_right = document.querySelector('.arrow_right')
 const img = document.querySelector('.banner-img')
-const dots = document.querySelectorAll('.dots .dot')
+const dots = document.querySelector('.dots')
 let index = 0
 
-//  Execution des fonctions  //
 
-function main() {
-clickRight()
-clickLeft()
+// Affichage des dots
+
+function display() {
+	for (let i=0; i < slides.length; i++) {
+
+// Création de la div et des class dans le document
+
+	const dot = document.createElement('span')
+	if ( i == index) {
+		dot.classList.add('dot_selected')
+	}
+
+// Ajout de la class ( dot enfant ) au parent dots
+
+	dot.classList.add('dot')
+	dots.appendChild(dot)
+	}
 }
-main()
+// ---------------------------------------------------- //
+display()
 
-// Ecoute de la flèche droite //
+main(slides)
 
-function clickRight() {
-	arrow_right.addEventListener('click', () => {
-		console.log("J'ai cliqué sur la flèche droite")
-		console.log(dots)
+function main(slides) {
 
-		//  On retire le premier point selected  //
-
-		dots[index].classList.remove('dot_selected')	
-
+	click(arrow_right, () => {
 		index++
 		if (index > slides.length - 1) {
-			index= 0
+			index = 0
 		}
-		// 	mise a jour de l'image, du texte, et du point (index+1) //
+	})
 
-		img.src = `assets/images/slideshow/${slides[index].image}`
-		document.querySelector('p').innerHTML = slides[index].tagLine
-		dots[index].classList.add('dot_selected')
+	click(arrow_left, () => {
+		index--
+		if (index < 0) {
+			index = slides.length - 1
+		}
 	})
 }
 
-// Ecoute de la flèche gauche //
+// Fonction qui gère le clique sur une flèche
+// @param {HTMLElement} arrow
+// @param {CallableFunction} callback
+// @returns {void}
 
-function clickLeft() {
-	arrow_left.addEventListener('click', () => {
-		console.log("J'ai cliqué sur la flèche gauche")
+function click(arrow, callback) {
+	arrow.addEventListener('click', (e) => {
+	const arraydots = document.querySelectorAll('.dots .dot')
 
-		dots[index].classList.remove('dot_selected')	
+//  On retire le premier point selected
 
-		index--
-		if (index < 0 ) {
-			index = slides.length - 1
-		}
-		console.log(index)
-		// 	mise a jour de l'image et du texte, et du point (index-1) //
-		
-	img.src = `assets/images/slideshow/${slides[index].image}`
+	arraydots[index].classList.remove('dot_selected')
+
+// on execute la fonction callback
+
+	callback(e)
+
+// 	mise à jour de l'image, du texte, et du point (index + ou -1)
+    img.src = `assets/images/slideshow/${slides[index].image}`
 	document.querySelector('p').innerHTML = slides[index].tagLine
-	dots[index].classList.add('dot_selected')
+	arraydots[index].classList.add('dot_selected')
 	})
 }
